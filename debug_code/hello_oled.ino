@@ -10,11 +10,11 @@
 // | OLED Pin   | ESP8266 Pin | Notes                |
 // | ---------- | ----------- | -------------------- |
 // | GND        | GND         | Ground               |
-// | VDD        | 3.3V        | Power (3.3V, not 5V) |
+// | VDD        | 3.3V        | Power (3.3V)         |
 // | SCK (CLK)  | D5 (GPIO14) | SPI Clock            |
 // | SDA (MOSI) | D7 (GPIO13) | SPI Data             |
-// | RES        | D0 (GPIO16) | Reset (can vary)     |
-// | DC         | D2 (GPIO4)  | Data/Command select  |
+// | RES        | D6 (GPIO12) | Reset                |
+// | DC         | D3 (GPIO0)  | Data/Command select  |
 // | CS         | D8 (GPIO15) | Chip select          |
 // 
 // Don’t use D7, D5 for anything other than SPI for OLED when using hardware SPI.
@@ -24,17 +24,22 @@
 // see https://lastminuteengineers.com/wemos-d1-mini-pinout-reference/ for the details
 // on which can be used for what, and why.
 
-#define OLED_MOSI   D7  // GPIO13
+// Working pin setup for OLED without interfering with the encoder pins and onboard LED
+// Don't use D4, it's connected to the onboard blue LED so leave D4 Pin unused
 #define OLED_CLK    D5  // GPIO14
-#define OLED_DC     D2  // GPIO4
-#define OLED_CS     D8  // GPIO15
-#define OLED_RESET  D0  // GPIO16
+#define OLED_MOSI   D7  // GPIO13
+#define OLED_RESET  D6  // GPIO12 — safe
+#define OLED_DC     D3  // GPIO0 — safe if pulled HIGH at boot (default with pull-up)
+#define OLED_CS     D8  // GPIO15 — must be LOW at boot (OLED CS is typically LOW)
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT,
                          &SPI, OLED_DC, OLED_RESET, OLED_CS);
+
+// store the count
+volatile int counter = 0;
 
 void setup() {
   Serial.begin(115200);
@@ -53,4 +58,18 @@ void setup() {
   display.setCursor(0, 0);
   display.println("Hello OLED");
   display.display();
+}
+
+void loop() {
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(WHITE);
+  display.setCursor(0, 20);
+  display.print("Seconds: ");
+  display.println(counter);
+  display.display();
+
+  // refresh every 1s
+  delay(1000);
+  counter++
 }

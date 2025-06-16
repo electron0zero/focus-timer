@@ -36,7 +36,41 @@ Breadboard, Jumper Wires(Dupont), 10k OHM resister, Soldering Station, etc.
 
 ## Pin Mapping and Wiring
 
-<TOOD: Add the pin mapping and wiring diagram and the connections for the components>
+The pin mapping is as follows:
+
+#### OLED Pin Mapping
+
+| OLED Pin | D1 Mini Pin | Comments                                                                 |
+|----------|-------------|--------------------------------------------------------------------------|
+| GND      | G (GND)     | Ground                                                                   |
+| VDD      | 3V3         | Power supply (use 3.3V only)                                             |
+| SCK      | D5          | SPI Clock — hardware SPI line, do not reuse                              |
+| SDA      | D7          | SPI Data — hardware SPI line, do not reuse                               |
+| RES      | D6          | OLD reset PIN                                                            |
+| DC       | D3          | Has pull-up; LOW at boot can cause boot issues — OK with INPUT_PULLUP    |
+| CS       | D8          | Must be LOW at boot — OLED CS is typically LOW anyway                    |
+
+
+#### Rotary Encoder Pin Mapping
+
+| Encoder Pin | D1 Mini Pin | Comments                                              |
+|-------------|-------------|-------------------------------------------------------|
+| CLK         | D1          | INT-capable — safe                                    |
+| DT          | D2          | INT-capable — safe                                    |
+| SW          | D0          | No internal pull-up — needs external 10KΩ pull-up     |
+
+
+**NOTE**
+- Don't use D4, it's connected to the onboard blue LED so leave D4 Pin unused to not interfere with the built in LED.
+- Don’t use D7, D5 for anything other than SPI for OLED when using hardware SPI. this OLED breakout board uses hardware SPI, so you must use the same pins as shown above.
+
+
+#### wiring diagram
+
+![wiring image](./circuit_image.png)
+
+See [Focus Timer Wiring](https://app.cirkitdesigner.com/project/0dea471c-eeaa-448d-815e-7a7b2d2015ea) cirkitdesigner project for interactive wiring diagram.
+
 
 ## Microcontroller firmware
 
@@ -44,6 +78,8 @@ Load the firmware from the focus_timer.ino file into your D1 Mini (ESP8266) usin
 
 Watch this video to see how to setup Arduino IDE for ESP8266: [Get Started With A D1 Mini (ESP8266) In Under 5 Minutes!](https://www.youtube.com/watch?v=WnRk8w7SyTo)
 
+
+If the firmware does not work as expected, or some components are not working, you can try to [debug_code](./debug_code/) firmware and try to debug with logs in the serial monitor in the Arduino IDE.
 
 ## 3D Printed Parts - Case
 
