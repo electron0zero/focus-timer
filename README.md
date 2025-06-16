@@ -21,12 +21,12 @@ See this [video from the original project](https://www.youtube.com/watch?v=Wko0z
 
 ## BOM
 
-| Component | Quantity | Price (INR) | Robu.in Link |
+| Component | Quantity | Price (INR) | Robu.in Item and Link |
 |-----------|----------|-------------|--------------|
-| D1 Mini (ESP8266) | 1 | ₹ 182.00  | [link](https://robu.in/product/d1-mini-v2-nodemcu-4m-bytes-lua-wifi-internet-of-things-development-board-based-esp8266/)     |
-| 0.96" OLED Display (SSD1306) | 1 | ₹ 240.00 | [link](https://robu.in/product/0-96-oled-display-module/) |
-| Rotary Encoder (HW-040) | 1 | ₹ 49.00 | [link](https://robu.in/product/m274-360-degree-rotary-encoder-module-brick-sensor/)  |
-| Jumper Wires (Dupont) | 1 | ₹ 145.53 | [link](https://robu.in/product/20-cm-40-pin-dupont-male-male-male-female-female-female-cable-combo/)   |
+| D1 Mini (ESP8266) | 1 | ₹ 182.00  | D1 Mini V2 NodeMcu 4M Bytes Lua WIFI Internet Of Things Development Board Based ESP8266 - [link](https://robu.in/product/d1-mini-v2-nodemcu-4m-bytes-lua-wifi-internet-of-things-development-board-based-esp8266/)     |
+| 0.96" OLED Display (SSD1306) | 1 | ₹ 240.00 | 0.96″ OLED Display Module – SPI/I2C – 128×64 – 7 Pin (Blue) - [link](https://robu.in/product/0-96-oled-display-module/) |
+| Rotary Encoder (HW-040) | 1 | ₹ 49.00 | M274 360 Degree Rotary Encoder Brick Sensor Module - [link](https://robu.in/product/m274-360-degree-rotary-encoder-module-brick-sensor/)  |
+| Jumper Wires (Dupont) | 1 | ₹ 145.53 | 20 CM 40 Pin Dupont Cable Male/Male, Male/Female, Female/Female Cable Combo - [link](https://robu.in/product/20-cm-40-pin-dupont-male-male-male-female-female-female-cable-combo/)   |
 
 Total BOM Cost: ₹ 616.53 INR
 
