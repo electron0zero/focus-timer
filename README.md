@@ -1,0 +1,64 @@
+# Focus Timer
+
+A customized version of [Project IGOR](https://github.com/UrbanCircles/igor), modified to suit my personal preferences and needs and the components I can easily find in major Indian hobby and electronics websites.
+
+This is mostly the same as the original IGOR project, but with some tweaks to code and the PIN mapping for my specific hardware setup.
+
+If you want to build your own version, you can use this as a starting point.
+
+This would cut down the trial and error time for you, if your hardware is different from the original project and more close to mine.
+
+## Features
+
+Mostly same as the original IGOR project, with some minor tweaks, [see original](https://github.com/UrbanCircles/igor#its-simple-features-v1)
+
+See this [video from the original project](https://www.youtube.com/watch?v=Wko0zgRGtPI) for a demo of the features.
+
+## Hardware
+- D1 Mini (ESP8266) - Sourced from robu.in
+- 0.96" OLED Display (SSD1306)
+- Rotary Encoder (HW-040)
+
+## BOM
+
+| Component | Quantity | Price (INR) | Robu.in Link |
+|-----------|----------|-------------|--------------|
+| D1 Mini (ESP8266) | 1 | ₹ 182.00  | [link](https://robu.in/product/d1-mini-v2-nodemcu-4m-bytes-lua-wifi-internet-of-things-development-board-based-esp8266/)     |
+| 0.96" OLED Display (SSD1306) | 1 | ₹ 240.00 | [link](https://robu.in/product/0-96-oled-display-module/) |
+| Rotary Encoder (HW-040) | 1 | ₹ 49.00 | [link](https://robu.in/product/m274-360-degree-rotary-encoder-module-brick-sensor/)  |
+| Jumper Wires (Dupont) | 1 | ₹ 145.53 | [link](https://robu.in/product/20-cm-40-pin-dupont-male-male-male-female-female-female-cable-combo/)   |
+
+Total BOM Cost: ₹ 616.53 INR
+
+**Miscellaneous Items**
+
+Breadboard, Jumper Wires(Dupont), 10k OHM resister, Soldering Station, etc.
+
+## Pin Mapping and Wiring
+
+<TOOD: Add the pin mapping and wiring diagram and the connections for the components>
+
+## Microcontroller firmware
+
+Load the firmware from the focus_timer.ino file into your D1 Mini (ESP8266) using the Arduino IDE.
+
+Watch this video to see how to setup Arduino IDE for ESP8266: [Get Started With A D1 Mini (ESP8266) In Under 5 Minutes!](https://www.youtube.com/watch?v=WnRk8w7SyTo)
+
+
+## 3D Printed Parts - Case
+
+I used a [3D files](https://github.com/UrbanCircles/igor/tree/main/3D%20Parts) from the original project, and printed it on my printer.
+
+Same file can be found on [Printables](https://www.printables.com/model/1019283-project-igor-open-source-offline-loyal-cheerful-fo)
+
+If you don't own a 3D printer, ask your friends who have one or use 3D printing services from robu.in or other similar websites.
+
+## Assembly & User Guide
+
+See Original [Assembly](https://github.com/UrbanCircles/igor#assembly) and [guide](https://github.com/UrbanCircles/igor#user-guide)
+
+## Credits
+
+Most of the code is from [Project IGOR by UrbanCircles](https://github.com/UrbanCircles/igor) with some modifications by me.
+
+The original project is licensed under the MIT License, my debugging code and modifications are also licensed under the MIT License.
