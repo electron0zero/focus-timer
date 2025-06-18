@@ -87,6 +87,10 @@ I used a [3D files](https://github.com/UrbanCircles/igor/tree/main/3D%20Parts) f
 
 Same file can be found on [Printables](https://www.printables.com/model/1019283-project-igor-open-source-offline-loyal-cheerful-fo)
 
+My encoder HW-040 didn't come with a screw stem to attach the encoder knob to the case, so I modelled a custom standoff to keep the encoder pcb in place and allow the encoder knob to be attached to the case.
+
+if you want to print the standoff, you can find stl file in the repo, along with the [openSCAD](https://openscad.org/index.html) file to modify it if needed: [hw-040-standoff.scad](./hw-040-standoff.scad) and [hw-040-standoff.stl](./hw-040-standoff.stl)
+
 If you don't own a 3D printer, ask your friends who have one or use 3D printing services from robu.in or other similar websites.
 
 ## Assembly & User Guide
