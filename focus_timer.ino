@@ -465,7 +465,8 @@ void handleRotaryInput() {
     Serial.print(" - Menu option: "); Serial.println(menuOptions[menuIndex]);
   } else if (currentState == SELECTING_DOWN_DURATION) {
     // handle the increase and decrease in the down minutes
-    countdownValue = max(1, countdownValue + rotation);
+    // increase or decrease the countdown value in the steps of 5 mins
+    countdownValue = max(1, countdownValue + (rotation * 5));
     updateDisplay();
     Serial.print(millis());  // Print the current time in milliseconds
     Serial.print(" - Countdown value: "); Serial.println(countdownValue);
