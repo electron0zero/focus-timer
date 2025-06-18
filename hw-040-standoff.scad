@@ -1,12 +1,12 @@
 // Parameters
 leg_width = 0.10;           // Width of each leg
-leg_depth = 1.3;           // Depth/thickness of each leg
+leg_depth = 0.90;           // Depth/thickness of each leg
 leg_spacing = 1.3;         // Space between the two legs
-table_height = 1.04;      // Height of the table top
+table_height = 0.85;      // Height of the table top
 top_thickness = 0.10;       // Thickness of the tabletop
 pin_diameter = 0.10;       // Diameter of the alignment pins
 pin_spacing = 0.54;        // Center-to-center spacing between pins
-pin_height = 0.08;          // Height of alignment pins
+pin_height = 0.12;          // Height of alignment pins
 
 // Build each leg
 module leg(x_offset) {
@@ -23,7 +23,7 @@ module tabletop() {
 
 // Build alignment pins on top
 module pin(x_offset) {
-    translate([x_offset, leg_depth * (2/3), table_height + top_thickness])
+    translate([x_offset, leg_depth * (1/4), table_height + top_thickness])
         cylinder(h = pin_height, d = pin_diameter, $fn = 16);
 }
 
