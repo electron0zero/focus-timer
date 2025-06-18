@@ -328,6 +328,7 @@ void startCountingUp() {
   elapsedMinutes = 0;
   isCounting = true;
   // lastActivityTime = millis();  // Reset inactivity timer
+  selectConfirm();
   Serial.println("Counting UP started.");
 }
 
@@ -346,6 +347,7 @@ void confirmCountdownSelection() {
   initialCountdownValue = countdownValue;
   currentState = COUNTING_DOWN;
   isCounting = true;
+  selectConfirm();
   // lastActivityTime = millis();  // Reset inactivity timer
   Serial.print("Counting DOWN started with "); Serial.print(countdownValue); Serial.println(" minutes.");
 }
@@ -414,7 +416,7 @@ void successAnimation() {
   for (int radius = 2; radius <= 30; radius += 2) {
     display.drawCircle(centerX, centerY, radius, WHITE);
     display.display();
-    delay(100);
+    delay(40);
 
     if (radius % 4 == 0) {
       display.clearDisplay();
@@ -428,7 +430,18 @@ void successAnimation() {
   display.setCursor(20, 20);
   display.print("SUCCESS!");
   display.display();
-  delay(500); // 0.5 seconds
+  delay(1000); // 1 seconds
+  display.clearDisplay();
+  display.display();
+}
+
+void selectConfirm() {
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setCursor(10, 20);
+  display.print("SELECTED!");
+  display.display();
+  delay(1000); // 1 seconds
   display.clearDisplay();
   display.display();
 }
@@ -451,6 +464,7 @@ void handleRotaryInput() {
     Serial.print(millis());  // Print the current time in milliseconds
     Serial.print(" - Menu option: "); Serial.println(menuOptions[menuIndex]);
   } else if (currentState == SELECTING_DOWN_DURATION) {
+    // handle the increase and decrease in the down minutes
     countdownValue = max(1, countdownValue + rotation);
     updateDisplay();
     Serial.print(millis());  // Print the current time in milliseconds
