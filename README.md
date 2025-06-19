@@ -1,5 +1,10 @@
 # Focus Timer
 
+![Flow Counter showing focus minutes](./focus.jpeg)
+
+![Flow Counter showing up counting](./count_up.jpeg)
+
+
 A customized version of [Project IGOR](https://github.com/UrbanCircles/igor), modified to suit my personal preferences and needs and the components I can easily find in major Indian hobby and electronics websites.
 
 This is mostly the same as the original IGOR project, but with some tweaks to code and the PIN mapping for my specific hardware setup.
@@ -29,6 +34,8 @@ See this [video from the original project](https://www.youtube.com/watch?v=Wko0z
 | Jumper Wires (Dupont) | 1 | ₹ 145.53 | 20 CM 40 Pin Dupont Cable Male/Male, Male/Female, Female/Female Cable Combo - [link](https://robu.in/product/20-cm-40-pin-dupont-male-male-male-female-female-female-cable-combo/)   |
 
 Total BOM Cost: ₹ 616.53 INR
+
+> NOTE: to encoder I bought doesn't have a screw on the stem and it required a standoff to make it work, so if you don't want the hassle, buy an encoder that has a screw on stem so you can screw it to the box. it makes it easy to assemble and way better then the standoff workaround.
 
 **Miscellaneous Items**
 
