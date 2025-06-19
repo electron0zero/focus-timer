@@ -1,8 +1,8 @@
 # Focus Timer
 
-![Flow Counter showing focus minutes](./focus.jpeg)
+![Flow Counter showing focus minutes](./focus.jpeg =250x250)
 
-![Flow Counter showing up counting](./count_up.jpeg)
+![Flow Counter showing up counting](./count_up.jpeg =250x250)
 
 
 A customized version of [Project IGOR](https://github.com/UrbanCircles/igor), modified to suit my personal preferences and needs and the components I can easily find in major Indian hobby and electronics websites.
