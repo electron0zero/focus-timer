@@ -61,11 +61,11 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT,
 int flowMinutes = 0;   // Total flow minutes
 int menuIndex = 0;     // 0 for UP, 1 for DOWN, 2 for Reset
 String menuOptions[3] = {"UP", "DOWN", "Reset"};  // Label reset option as "Reset"
-// unsigned long lastActivityTime = 0;  // For inactivity detection
-// const unsigned long inactivityLimit = 3 * 60000;  // 3 minutes in milliseconds
+// for IDLE mode detection and display IDLE? text
+unsigned long lastActivityTime = 0;  // For inactivity detection
+const unsigned long inactivityLimit = 2 * 60000;  // 2 minutes in milliseconds
 
-// enum State { MENU, COUNTING_UP, COUNTING_DOWN, SELECTING_DOWN_DURATION, IDLE }; // not using the idle mode
-enum State { MENU, COUNTING_UP, COUNTING_DOWN, SELECTING_DOWN_DURATION };
+enum State { MENU, COUNTING_UP, COUNTING_DOWN, SELECTING_DOWN_DURATION, IDLE };
 State currentState = MENU;
 
 int countdownValue = 50;  // Default value for countdown
@@ -75,10 +75,10 @@ int elapsedMinutes = 0;
 bool isCounting = false;
 
 // IDLE mode extended behavior
-// const unsigned long displayOffTimeLimit = 30 * 60000;  // 30 minutes in milliseconds
+const unsigned long displayOffTimeLimit = 5 * 60000;  // 5 minutes in milliseconds
 
-// unsigned long idleStartTime = 0;  // Track when IDLE mode starts
-// bool displayOff = false;  // Track if the display is off
+unsigned long idleStartTime = 0;  // Track when IDLE mode starts
+bool displayOff = false;  // Track if the display is off
 
 // counter to know if the encoder was rotated or not, with direction
 // We use following values:
@@ -173,7 +173,7 @@ void loop() {
 
   // disable the idle mode feature
   // Handle inactivity
-  // handleInactivity(currentMillis);
+  handleInactivity(currentMillis);
 
   // reset rotation variables
   if (rotated) {
@@ -262,11 +262,9 @@ void updateDisplay() {
     mainRowText = String(elapsedMinutes);  // Display counting up minutes
   } else if (currentState == COUNTING_DOWN || currentState == SELECTING_DOWN_DURATION) {
     mainRowText = String(countdownValue);  // Display countdown minutes
+  } else if (currentState == IDLE) {
+    mainRowText = "IDLE?";
   }
-  // disable the IDLE mode
-  // else if (currentState == IDLE) {
-  //   mainRowText = "IDLE?";
-  // }
 
   int mainRowTextWidth = mainRowText.length() * 24;  // TextSize 4, so 24 pixels per char
   int mainRowX = (128 - mainRowTextWidth) / 2;  // Calculate centered X position
@@ -333,7 +331,7 @@ void startCountingUp() {
   currentState = COUNTING_UP;
   elapsedMinutes = 0;
   isCounting = true;
-  // lastActivityTime = millis();  // Reset inactivity timer
+  lastActivityTime = millis();  // Reset inactivity timer
   selectConfirm();
   Serial.println("Counting UP started.");
 }
@@ -343,7 +341,7 @@ void startCountingUp() {
 void startSelectingDownDuration() {
   currentState = SELECTING_DOWN_DURATION;
   countdownValue = 50;
-  // lastActivityTime = millis();  // Reset inactivity timer
+  lastActivityTime = millis();  // Reset inactivity timer
   Serial.println("Selecting DOWN duration.");
 }
 
@@ -354,7 +352,7 @@ void confirmCountdownSelection() {
   currentState = COUNTING_DOWN;
   isCounting = true;
   selectConfirm();
-  // lastActivityTime = millis();  // Reset inactivity timer
+  lastActivityTime = millis();  // Reset inactivity timer
   Serial.print("Counting DOWN started with "); Serial.print(countdownValue); Serial.println(" minutes.");
 }
 
@@ -459,7 +457,7 @@ void handleRotaryInput() {
   if (rotation == 0) return;  // No rotation detected
 
   // IDLE mode feature disabled
-  // lastActivityTime = millis();  // Reset inactivity timer on any valid rotation
+  lastActivityTime = millis();  // Reset inactivity timer on any valid rotation
   Serial.print(millis());  // Print the current time in milliseconds
   Serial.print(" - Rotation detected, activity timer reset. Rotation: ");
   Serial.println(rotation);
@@ -479,66 +477,64 @@ void handleRotaryInput() {
   }
 }
 
-// //=========================================================
-// // Handle inactivity and switch to IDLE if necessary
-// // NOTE(suraj): we don't want to have ideal feature and stop the display after a while
-// // so I am going to comment this out.
-// void handleInactivity(unsigned long currentMillis) {
-//   // Comment out frequent serial prints to improve performance
-//   // Serial.print(millis());
-//   // Serial.print(" - Current time (millis): ");
-//   // Serial.println(currentMillis);
+//=========================================================
+// Handle inactivity and switch to IDLE if necessary
+void handleInactivity(unsigned long currentMillis) {
+  // Comment out frequent serial prints to improve performance
+  // Serial.print(millis());
+  // Serial.print(" - Current time (millis): ");
+  // Serial.println(currentMillis);
 
-//   // Serial.print(millis());
-//   // Serial.print(" - Last activity time (millis): ");
-//   // Serial.println(lastActivityTime);
+  // Serial.print(millis());
+  // Serial.print(" - Last activity time (millis): ");
+  // Serial.println(lastActivityTime);
 
-//   // Make sure the subtraction does not cause an overflow/underflow
-//   if (currentMillis >= lastActivityTime) {
-//     unsigned long timeSinceLastActivity = currentMillis - lastActivityTime;
+  // Make sure the subtraction does not cause an overflow/underflow
+  if (currentMillis >= lastActivityTime) {
+    unsigned long timeSinceLastActivity = currentMillis - lastActivityTime;
 
-//     // Serial.print(millis());
-//     // Serial.print(" - Time since last activity (ms): ");
-//     // Serial.println(timeSinceLastActivity);
+    // Serial.print(millis());
+    // Serial.print(" - Time since last activity (ms): ");
+    // Serial.println(timeSinceLastActivity);
 
-//     // Check if the user is in the MENU or selecting countdown duration mode
-//     if ((currentState == MENU || currentState == SELECTING_DOWN_DURATION) && (timeSinceLastActivity > inactivityLimit)) {
-//       if (currentState != IDLE) {
-//         currentState = IDLE;
-//         idleStartTime = millis();  // Record when IDLE mode starts
-//         updateDisplay();
-//         Serial.print(millis());  // Print the current time in milliseconds
-//         Serial.println(" - IDLE state entered due to inactivity.");
-//       }
-//     }
-//   } else {
-//     // Comment out warning to reduce unnecessary serial prints
-//     // Serial.println(" - Warning: currentMillis is less than lastActivityTime!");
-//   }
+    // Check if the user is in the MENU or selecting countdown duration mode
+    if ((currentState == MENU || currentState == SELECTING_DOWN_DURATION) && (timeSinceLastActivity > inactivityLimit)) {
+      if (currentState != IDLE) {
+        currentState = IDLE;
+        idleStartTime = millis();  // Record when IDLE mode starts
+        updateDisplay();
+        Serial.print(millis());  // Print the current time in milliseconds
+        Serial.println(" - IDLE state entered due to inactivity.");
+      }
+    }
+  } else {
+    // Comment out warning to reduce unnecessary serial prints
+    // Serial.println(" - Warning: currentMillis is less than lastActivityTime!");
+  }
 
-//   // Check if the user has been in IDLE for more than 30 minutes and turn off the display
-//   if (currentState == IDLE && !displayOff && (currentMillis - idleStartTime > displayOffTimeLimit)) {
-//     displayOff = true;
-//     display.ssd1306_command(SSD1306_DISPLAYOFF);  // Turn off the display
-//     Serial.print(millis());  // Print the current time in milliseconds
-//     Serial.println(" - Display turned off after 30 minutes of IDLE.");
-//   }
+  // Check if the user has been in IDLE for more than displayOffTimeLimit and turn off the display
+  if (currentState == IDLE && !displayOff && (currentMillis - idleStartTime > displayOffTimeLimit)) {
+    displayOff = true;
+    display.ssd1306_command(SSD1306_DISPLAYOFF);  // Turn off the display
+    Serial.print(millis());  // Print the current time in milliseconds
+    Serial.println(" - Display turned off after it reached display off time limit.");
+  }
 
-//   // Exit IDLE if any rotary or button action happens
-//   if (currentState == IDLE && (rotation != 0 || buttonPressed())) {
-//     currentState = MENU;
-//     lastActivityTime = millis();  // Reset inactivity timer upon exiting IDLE
+  // Exit IDLE if any rotary or button action happens
+  if (currentState == IDLE && (rotation != 0 || buttonPressed())) {
+    currentState = MENU;
+    lastActivityTime = millis();  // Reset inactivity timer upon exiting IDLE
 
-//     // Turn the display back on if it was off
-//     if (displayOff) {
-//       display.ssd1306_command(SSD1306_DISPLAYON);
-//       displayOff = false;
-//       Serial.print(millis());  // Print the current time in milliseconds
-//       Serial.println(" - Display turned back on.");
-//     }
+    // Turn the display back on if it was off
+    if (displayOff) {
+      display.ssd1306_command(SSD1306_DISPLAYON);
+      displayOff = false;
+      Serial.print(millis());  // Print the current time in milliseconds
+      Serial.println(" - Display turned back on.");
+    }
 
-//     updateDisplay();
-//     Serial.print(millis());  // Print the current time in milliseconds
-//     Serial.println(" - Exiting IDLE mode. Back to MENU.");
-//   }
-// }
+    updateDisplay();
+    Serial.print(millis());  // Print the current time in milliseconds
+    Serial.println(" - Exiting IDLE mode. Back to MENU.");
+  }
+}
