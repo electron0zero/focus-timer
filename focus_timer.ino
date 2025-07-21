@@ -74,7 +74,7 @@ unsigned long previousMillis = 0;  // For counting logic
 int elapsedMinutes = 0;
 bool isCounting = false;
 
-// IDLE mode extended behavior
+// IDLE mode extended behavior, display is turned off if we are in IDLE mode for 5 mins
 const unsigned long displayOffTimeLimit = 5 * 60000;  // 5 minutes in milliseconds
 
 unsigned long idleStartTime = 0;  // Track when IDLE mode starts
