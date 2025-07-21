@@ -237,7 +237,13 @@ void updateDisplay() {
   } else if (currentState == COUNTING_DOWN) {
     topRowText = "Focus! \x19";  // Focus with downward triangle for counting DOWN
   } else {
-    topRowText = "Flow: " + String(flowMinutes);  // Display total flow minutes when not counting
+    // Display total flow minutes as hours and mins when not counting
+    int hours = flowMinutes / 60;
+    int minutes = flowMinutes % 60;
+    char buffer[16];
+    // using snprintf to padd the hour and seconds
+    snprintf(buffer, sizeof(buffer), "Flow %02d:%02d", hours, minutes);
+    topRowText = String(buffer);
   }
 
   int topRowTextWidth = topRowText.length() * 12;  // TextSize 2, so 12 pixels per char
